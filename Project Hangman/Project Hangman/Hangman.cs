@@ -4,11 +4,11 @@ const char Underscore = '_';
 const string WinScreenText = @"
 ┌───────────────────────────┐
 │                           │
-│ WW WW ** NN N             │
-│ WW WW    ii NNN N        │
-│ WW WW WW ii N NN N        │
-│ WWWWWWW  ii N NNN          │
-│ WW W     ii N NN              │
+│ WW       WW  ** N    N    │
+│ WW       WW  ii NNN  N    │
+│  WW  WW WW   ii N NN N    │
+│   WWWWWWW    ii N  NNN    │
+│    WW W      ii N   NN    │
 │                           │
 │ Good job!                 │
 │ You guessed the word!     │
@@ -17,15 +17,15 @@ const string WinScreenText = @"
 
 const string LossScreenText = @"
 ┌────────────────────────────────────┐
-│ LLL OOOO SSSS SSSS │
-│ LLL OO OO SS SS SS SS │
-│ LLL OO OO SS SS │
-│ LLL OO OO SSSS SSSS │
-│ LLL OO OO SS SS │
-│ LLLLLLLLLL OO OO SS SS SS SS │
-│ LLLLLLLLL OOOO SSSS SSSS │
-│ |
-│ You were so close. │
+│ LLL          OOOO     SSSS   SSSS  │
+│ LLL         OO  OO   SS  SS SS  SS │
+│ LLL        OO    OO  SS     SS     │
+│ LLL        OO    OO   SSSS   SSSS  │
+│ LLL        OO    OO      SS     SS │
+│ LLLLLLLLLL  OO  OO   SS  SS SS  SS │
+│ LLLLLLLLL    OOOO     SSSS   SSSS  │
+│                                    |
+│ You were so close.                 │
 │ Next time you will guess the word! │
 └────────────────────────────────────┘
 ";
@@ -252,6 +252,7 @@ void PlayGame(string word, string wordToGuess, int incorrectGuessCount, List<cha
             Console.Clear();
             Console.WriteLine(WinScreenText);
             Console.WriteLine($"The word you guessed is [{word}].");
+            Console.Write("If you want to play again, press [Enter]. Else, type 'quit': ");
             break;
         }
 
@@ -264,7 +265,7 @@ void PlayGame(string word, string wordToGuess, int incorrectGuessCount, List<cha
             Console.Clear();
             Console.WriteLine(LossScreenText);
             Console.WriteLine($"The exact word is [{word}].");
-
+            Console.Write("If you want to play again, press [Enter]. Else, type 'quit': ");
             break;
         }
         
@@ -315,7 +316,7 @@ static void DrawDeathAnimation(string[] deathAnimation)
 {
     for(int i = 0; i < deathAnimation.Length; i++)
     {
-        Console.WriteLine(deathAnimation[i]);
+        Console.WriteLine(deathAnimation[i]);   
         Thread.Sleep(200);
         Console.SetCursorPosition(0, 0);
     }
@@ -336,16 +337,13 @@ while (true)
     int incorrectCuessCount = 0;
     List<char> playerUsedLetters = new List<char>();
 
-    Console.Write("If you want to play again, press [Enter]. Else, type 'quit': ");
-
     DrawCurrentGameState(false, incorrectCuessCount, wordToGuess, playerUsedLetters);
-    Console.ReadLine();
     
     PlayGame(word, wordToGuess, incorrectCuessCount, playerUsedLetters);
 
     string quitOrPlay = Console.ReadLine();
 
-    if(quitOrPlay == "quit")
+    if (quitOrPlay == "quit")
     {
         Console.WriteLine("Thank you for playing! Hangman was closed.");
         break;
